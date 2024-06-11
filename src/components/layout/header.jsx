@@ -16,15 +16,13 @@ const Header = ({ onHeaderClick }) => {
     };
 
     return (
-        <header>
-            <CHeader position="sticky" className="py-3">
-                <CContainer fluid>
-                    <CHeaderToggler className='p-0 ms-2' style={{ marginInlineStart: '-14px' }} onClick={ handleClick }>
-                        <CIcon icon={icon.cilMenu} size="lg" />
-                    </CHeaderToggler>
-                </CContainer>
-            </CHeader>
-        </header>
+        <CHeader position="sticky" className="header py-3">
+            <CContainer fluid>
+                <CHeaderToggler className='p-0 ms-2' style={{ marginInlineStart: '-14px' }} onClick={ handleClick }>
+                    <CIcon icon={icon.cilMenu} size="lg" />
+                </CHeaderToggler>
+            </CContainer>
+        </CHeader>
     )
 }
 

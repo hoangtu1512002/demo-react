@@ -12,11 +12,11 @@ const Layout = () => {
     }
 
     return (
-        <div>
+        <>
             <Sidebar showSidebar={sidebarWidth} />
             <Header onHeaderClick={handleShowSidebar}/>
             <Content />
-        </div>
+        </>
     )
 }
 

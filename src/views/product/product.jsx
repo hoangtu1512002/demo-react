@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import 
 {
   CTable,
@@ -21,6 +20,7 @@ import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
 import axios from '@/api/axiosConfig.jsx';
+import { Link } from 'react-router-dom';
 
 
 const Product = () => {
@@ -58,11 +58,11 @@ const Product = () => {
 
   return (
     <>
-      <div className="card mt-4" style={{'width': '1500px'}}>
+      <div className="card mt-4">
         <div className="card-header d-flex justify-content-between align-items-center">
             <h4>List product</h4>
             <CButton color="primary">
-              <a href="" className='text-decoration-none text-white fs-5 block'>Add new</a>
+              <Link to="/admin/product/add" className='text-decoration-none text-white fs-6 block'>Add new product</Link>
             </CButton>
         </div>
         <div className="card-body">
@@ -103,22 +103,21 @@ const Product = () => {
         </div>
       </div>
 
-
     <CModal
-      visible={visible}
-      onClose={() => setVisible(false)}
-      aria-labelledby="delConfirm"
-    >
-      <CModalHeader>
-        <CModalTitle id="delConfirm">delete product</CModalTitle>
-      </CModalHeader>
-      <CModalBody>
-        <p>Are you sure you want to delete this product?</p>
-      </CModalBody>
-      <CModalFooter>
-        <CButton color="secondary">Close</CButton>
-        <CButton color="primary" onClick={() => deleteProduct()}>Delete</CButton>
-      </CModalFooter>
+        visible={visible}
+        onClose={() => setVisible(false)}
+        aria-labelledby="delConfirm"
+      >
+        <CModalHeader>
+          <CModalTitle id="delConfirm">delete product</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <p>Are you sure you want to delete this product?</p>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary">Close</CButton>
+          <CButton color="primary" onClick={() => deleteProduct()}>Delete</CButton>
+        </CModalFooter>
     </CModal>
   </>
   )
