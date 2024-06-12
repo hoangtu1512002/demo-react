@@ -12,6 +12,8 @@ const loginForm = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -22,15 +24,17 @@ const loginForm = () => {
   };
 
   const { isLogin, isAuthenticated } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const login = () => {
+    setIsLoading(true);
     axios
       .post("auth/login", formData)
       .then((res) => {
         const token = res.data.token;
         sessionStorage.setItem("token", token);
         isLogin();
+        setIsLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -39,7 +43,7 @@ const loginForm = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/admin")
+      navigate("/admin");
     }
   }, [isAuthenticated]);
 
@@ -74,7 +78,7 @@ const loginForm = () => {
         />
 
         <CButton onClick={login} color="primary" type="button" className="mt-4">
-          Login
+          {isLoading === false ? "Login" : "Login..."}
         </CButton>
       </CForm>
     </div>
