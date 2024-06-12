@@ -15,27 +15,22 @@ const AdminLogin = React.lazy(() => import("@/views/auth/login"));
 
 const routes = createBrowserRouter([
   {
-    path: '/',
+    path: "admin",
+    name: "Admin",
+    element: <ProtectedRoute element={<App />} />,
     children: [
-      {
-        path: "admin",
-        name: "Admin",
-        element: <ProtectedRoute element={<App />} />,
-        children: [
-          { path: "", element: <Dashboard /> },
-          { path: "product", element: <Product /> },
-          { path: "product/add", element: <NewProduct /> },
-          { path: "product/edit/:id", element: <EditProduct /> },
-          { path: "user", element: <User /> },
-        ],
-      },
-    
-      {
-        path: "admin/login",
-        name: "Admin login",
-        element: <AdminLogin />,
-      },
-    ]  
-  }
+      { path: "", element: <Dashboard /> },
+      { path: "product", element: <Product /> },
+      { path: "product/add", element: <NewProduct /> },
+      { path: "product/edit/:id", element: <EditProduct /> },
+      { path: "user", element: <User /> },
+    ],
+  },
+
+  {
+    path: "admin/login",
+    name: "Admin login",
+    element: <AdminLogin />,
+  },
 ]);
 export default routes;
