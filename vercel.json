@@ -1,5 +1,3 @@
 {
-  "redirects": [
-    { "source": "/", "destination": "/admin/login" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/admin/login" }]
 }
