@@ -10,11 +10,20 @@ const EditProduct = React.lazy(() => import('@/views/product/edit'))
 const User = React.lazy(() => import('@/views/user/list'))
 
 
+const Home = React.lazy(() => import('@/views/home/home'))
+
+
 const AdminLogin = React.lazy(() => import('@/views/auth/login'))
 
 const routes = createBrowserRouter
 (
     [
+        {
+            path: '/',
+            name: 'Home',
+            element: <Home />
+        },
+
         {
             path: '/admin',
             name: 'Admin',
