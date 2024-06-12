@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const instance = axios.create({
     baseURL: 'https://fakestoreapi.com', // Base URL của API
-    timeout: 10000, // Thời gian chờ request (milliseconds)
     headers: {
       'Content-Type': 'application/json', // Loại dữ liệu mặc định là JSON
     }
@@ -10,7 +9,10 @@ const instance = axios.create({
 
   instance.interceptors.request.use(
     (config) => {
-      // Xử lý request trước khi gửi đi
+      const token = sessionStorage.getItem('token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
       return config;
     },
     (error) => {

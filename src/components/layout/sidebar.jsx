@@ -5,6 +5,7 @@ import
     CSidebarNav,
     CNavItem,
     CNavGroup,
+    CSidebarBrand
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react';
@@ -18,10 +19,18 @@ const Sidebar = ({ showSidebar }) => {
         className="border-end"
         colorScheme="dark"
         position="fixed"
-        visible={showSidebar}
+        unfoldable={showSidebar}
       >
-        <CSidebarHeader className='p-0 border-bottom'>
-          <a href='#' className='text-decoration-none text-white py-3 text-center w-100 block'><h4 className='mb-0'>Admin</h4></a>
+        <CSidebarHeader className='border-bottom'>
+          <CSidebarBrand to="/" className='text-decoration-none'>
+            <h4 className="sidebar-brand-full mb-0">
+              <div className="d-flex align-item-center">
+                <CIcon icon={icon.cilFont} height={30}/>
+                <nav className='ps-2'>ADMIN</nav>
+              </div>
+            </h4>
+            <CIcon customClassName="sidebar-brand-narrow" icon={icon.cilFont} height={30} />
+          </CSidebarBrand>
         </CSidebarHeader>
 
         <CSidebarNav className='flex'>
@@ -35,7 +44,7 @@ const Sidebar = ({ showSidebar }) => {
           <CNavGroup
             toggler={
               <>
-                <CIcon customClassName="nav-icon" icon={icon.cilPuzzle} /> Product
+                <CIcon customClassName="nav-icon" icon={icon.cilWifiSignal1} /> Product
               </>
             }
           >
@@ -51,9 +60,23 @@ const Sidebar = ({ showSidebar }) => {
                 Add new product
               </Link>      
             </CNavItem>
-        </CNavGroup>
-        </CSidebarNav>
+          </CNavGroup>
 
+          <CNavGroup
+            toggler={
+              <>
+                <CIcon customClassName="nav-icon" icon={icon.cilUser} /> User
+              </>
+            }
+          >
+            <CNavItem>
+              <Link to="/admin/user" className='nav-link'>
+                <span className="nav-icon"><span className="nav-icon-bullet"></span></span>
+                List user
+              </Link>      
+            </CNavItem>
+          </CNavGroup>
+        </CSidebarNav>
       </CSidebar>
     )
   }

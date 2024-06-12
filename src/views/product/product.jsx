@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import 
-{
+import React, { useState, useEffect } from "react";
+import {
   CTable,
   CTableHead,
   CTableRow,
@@ -13,97 +12,125 @@ import
   CModalHeader,
   CModalTitle,
   CModalBody,
-  CModalFooter
-} from '@coreui/react'
+  CModalFooter,
+  CBadge,
+  CCard,
+  CCardHeader,
+  CCardBody,
+} from "@coreui/react";
 
-import CIcon from '@coreui/icons-react';
-import * as icon from '@coreui/icons';
+import CIcon from "@coreui/icons-react";
+import * as icon from "@coreui/icons";
 
-import axios from '@/api/axiosConfig.jsx';
-import { Link } from 'react-router-dom';
-
+import axios from "@/api/axiosConfig.jsx";
+import { Link } from "react-router-dom";
 
 const Product = () => {
-
-  const [products, setProducts] = useState([])
-  const [visible, setVisible] = useState(false)
-  const [productId, setProductId] = useState(null)
-
+  const [products, setProducts] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [productId, setProductId] = useState(null);
 
   useEffect(() => {
-    axios.get('/products')
-      .then(response => {
+    axios
+      .get("/products")
+      .then((response) => {
         setProducts(response.data);
       })
-      .catch(error => {
-        console.error('Error:', error);
+      .catch((error) => {
+        console.error("Error:", error);
       });
   }, []);
-  
+
   const showModal = (productId) => {
-    setProductId(productId)
-    setVisible(!visible)
-  }
+    setProductId(productId);
+    setVisible(!visible);
+  };
 
   const deleteProduct = () => {
-    axios.delete('products/' + productId)
-    .then(res => {
-      setProductId(null)
-      setVisible(false)
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  }
+    axios
+      .delete("products/" + productId)
+      .then((res) => {
+        setProductId(null);
+        setVisible(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
-      <div className="card mt-4">
-        <div className="card-header d-flex justify-content-between align-items-center">
-            <h4>List product</h4>
-            <CButton color="primary">
-              <Link to="/admin/product/add" className='text-decoration-none text-white fs-6 block'>Add new product</Link>
-            </CButton>
-        </div>
-        <div className="card-body">
-          <CTable>
+      <CCard>
+        <CCardHeader>
+          <div className="w-100 mb-2 d-flex align-items-center justify-content-between">
+            <h4 className="p-2 mb-0">List Product</h4>
+            <Link to="/admin/product/add">
+              <CButton color="primary" className="fs-6 fw-bold">
+                Add new product
+              </CButton>
+            </Link>
+          </div>
+        </CCardHeader>
+        <CCardBody>
+          <CTable striped>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">id</CTableHeaderCell>
-                <CTableHeaderCell scope="col">title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">price</CTableHeaderCell>
-                <CTableHeaderCell scope="col">image</CTableHeaderCell>
-                <CTableHeaderCell scope="col">action</CTableHeaderCell>
+                <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="60%">
+                  Product
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Price</CTableHeaderCell>
+                <CTableHeaderCell
+                  scope="col"
+                  width="8%"
+                  className="text-center"
+                >
+                  Action
+                </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              { products.map(product => {
+              {products.map((product) => {
                 return (
                   <CTableRow key={product.id}>
-                    <CTableHeaderCell scope="row">{ product.id }</CTableHeaderCell>
-                    <CTableDataCell>{ product.title }</CTableDataCell>
-                    <CTableDataCell>{ product.price }</CTableDataCell>
+                    <CTableHeaderCell scope="row">
+                      {product.id}
+                    </CTableHeaderCell>
                     <CTableDataCell>
-                      <CImage rounded thumbnail src={product.image} width={60} height={60} />
+                      <CImage
+                        rounded
+                        thumbnail
+                        src={product.image}
+                        width={40}
+                        height={40}
+                      />{" "}
+                      {product.title}
                     </CTableDataCell>
                     <CTableDataCell>
-                      <CButton color="success">
-                        <CIcon icon={icon.cilPencil}></CIcon>
+                      <CBadge color="secondary">{product.price} $</CBadge>
+                    </CTableDataCell>
+                    <CTableDataCell className="text-center">
+                      <CButton color="success" className="text-white">
+                        <Link className="text-decoration-none text-white" to={'/admin/product/edit/' + product.id}><CIcon icon={icon.cilPencil}></CIcon></Link>
                       </CButton>
 
-                      <CButton color="danger" className='ms-2' onClick={() => showModal(product.id)}>
+                      <CButton
+                        color="danger"
+                        className="ms-2"
+                        onClick={() => showModal(product.id)}
+                      >
                         <CIcon icon={icon.cilTrash}></CIcon>
                       </CButton>
                     </CTableDataCell>
                   </CTableRow>
-                )
-              }) }
+                );
+              })}
             </CTableBody>
           </CTable>
-        </div>
-      </div>
+        </CCardBody>
+      </CCard>
 
-    <CModal
+      <CModal
         visible={visible}
         onClose={() => setVisible(false)}
         aria-labelledby="delConfirm"
@@ -115,12 +142,16 @@ const Product = () => {
           <p>Are you sure you want to delete this product?</p>
         </CModalBody>
         <CModalFooter>
-          <CButton color="secondary">Close</CButton>
-          <CButton color="primary" onClick={() => deleteProduct()}>Delete</CButton>
+          <CButton color="secondary" onClick={() => setVisible(false)}>
+            Close
+          </CButton>
+          <CButton color="primary" onClick={() => deleteProduct()}>
+            Delete
+          </CButton>
         </CModalFooter>
-    </CModal>
-  </>
-  )
-}
+      </CModal>
+    </>
+  );
+};
 
 export default Product;

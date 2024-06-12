@@ -5,7 +5,7 @@ import Sidebar from './sidebar.jsx';
 import Content from './content.jsx';
 
 const Layout = () => {
-    const [sidebarWidth, setSidebarWidth] = useState(true);
+    const [sidebarWidth, setSidebarWidth] = useState(false);
 
     const handleShowSidebar = () => {
         setSidebarWidth(!sidebarWidth)
